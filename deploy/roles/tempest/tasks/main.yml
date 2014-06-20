@@ -1,0 +1,5 @@
+---
+- pip: requirements='https://raw.githubusercontent.com/openstack/tempest/master/requirements.txt'
+
+- git: repo=https://github.com/openstack/tempest.git
+       dest=/opt/tempest version=stable/havana
