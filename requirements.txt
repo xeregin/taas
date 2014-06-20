@@ -1,0 +1,7 @@
+argh
+jinja2
+paste
+pyramid
+python-keystoneclient
+python-neutronclient
+python-novaclient
