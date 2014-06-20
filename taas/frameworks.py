@@ -40,7 +40,6 @@ class Framework(object):
 class CloudCafe(Framework):
 
     def __init__(self, config, framework, test):
-        from IPython import embed; embed()
         super(CloudCafe, self).__init__(config, framework, test)
 
 
