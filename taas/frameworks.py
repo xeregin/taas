@@ -38,7 +38,10 @@ class Framework(object):
 
 
 class CloudCafe(Framework):
-    pass
+
+    def __init__(self, config, framework, test):
+        from IPython import embed; embed()
+        super(CloudCafe, self).__init__(config, framework, test)
 
 
 class Tempest(Framework):

@@ -21,7 +21,9 @@ def main(endpoint, username='admin', password='secrete', framework='tempest',
         framework = CloudCafe(environment.config, framework, test)
 
     with cleanup(environment):
-        framework.test_from()
+        results = framework.test_from()
+
+    return results
 
 
 @contextmanager
