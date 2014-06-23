@@ -19,9 +19,9 @@ class Environment(object):
 
         self.keystone = keystone_client(
             username=username,
-            auth_url=auth_url,
             password=password,
-            tenant_name=username
+            tenant_name=username,
+            auth_url=auth_url
         )
         self.neutron = neutron_client(
             username=username,
