@@ -34,7 +34,6 @@ def cleanup(stage):
         LOG.error('Run failed: {1}'.format(stage, exc))
     finally:
         stage.destroy()
-        LOG.info('Done!')
 
 
 if __name__ == '__main__':

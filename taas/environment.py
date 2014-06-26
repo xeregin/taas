@@ -183,3 +183,5 @@ class Environment(object):
 
         if self.router:
             self.neutron.delete_router(self.router['id'])
+
+        LOG.info('Done!')
