@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import subprocess
@@ -70,13 +71,13 @@ class Tempest(Framework):
                                                          tempest_dir)
             subprocess.check_call(checkout, shell=True)
 
-        xunit_file = 'taas_results.xml'
-        xunit_flag = '--with-xunit --xunit-file={0}'.format(xunit_file)
+        json_file = 'taas_results.json'
+        json_flag = '--with-json --json-file={0}'.format(json_file)
 
         tempest_cmd = (
             'python -u `which nosetests` --where='
             '{0}/tempest/api/{1} {2}'.format(tempest_dir, self.test,
-                                             xunit_flag)
+                                             json_flag)
         )
 
         LOG.debug('Tempest command: {0}'.format(tempest_cmd))
@@ -89,3 +90,7 @@ class Tempest(Framework):
             )
         except Exception as exc:
             LOG.error(exc.output)
+
+        with open(json_file, 'r') as fp:
+            return json.dumps(json.load(fp), sort_keys=True, indent=4,
+                              separators=(',', ': '))
