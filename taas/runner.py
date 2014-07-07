@@ -3,7 +3,7 @@ import argh
 from contextlib import contextmanager
 
 from .environment import Environment
-from .frameworks import CloudCafe, Tempest
+from .frameworks import CloudCafe, NetSiege, Tempest
 from .utils.report import Reporter
 
 LOG = Reporter(__name__).setup()
@@ -18,8 +18,10 @@ def main(endpoint, username='admin', password='secrete', framework='tempest',
 
         if 'tempest' in framework:
             framework = Tempest(environment.config, framework, test)
-        else:
+        elif 'cloudcafe' in framework:
             framework = CloudCafe(environment.config, framework, test)
+        elif 'netsiege' in framework:
+            framework = NetSiege(environment.config, framework, test)
 
         results = framework.test_from()
 
