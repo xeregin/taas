@@ -31,8 +31,8 @@ def test_cloudcafe(request):
 if __name__ == '__main__':
     config = Configurator()
 
-    config.add_route('tempest', '/test/tempest')
-    config.add_route('cloudcafe', '/test/cloudcafe')
+    config.add_route('tempest', '/tempest/test')
+    config.add_route('cloudcafe', '/cloudcafe/test')
 
     config.add_view(test_tempest,
                     route_name='tempest', request_method='POST')
