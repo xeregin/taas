@@ -16,5 +16,3 @@
 
 - pip: requirements='https://raw.githubusercontent.com/jpmontez/taas/master/requirements.txt'
        state=latest
-
-- pip: name='git+https://github.com/jpmontez/nose-json.git#egg=nose-json'
