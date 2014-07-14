@@ -18,14 +18,14 @@ def get_not_defined(request):
 
 def test_tempest(request):
     request_dict = json.loads(request.body)
-    results = runner.main(framework="tempest", **request_dict)
-    return Response(results)
+    results = runner.main(framework='tempest', **request_dict)
+    return Response(results, content_type='application/json')
 
 
 def test_cloudcafe(request):
     request_dict = json.loads(request.body)
-    results = runner.main(framework="cloudcafe", **request_dict)
-    return Response(results)
+    results = runner.main(framework='cloudcafe', **request_dict)
+    return Response(results, content_type='application/json')
 
 
 if __name__ == '__main__':
