@@ -1,6 +1,5 @@
 from .environment import Environment
 from .frameworks import CloudCafe, Tempest
-from .utils.report import Reporter
 from .utils import cleanup, Reporter
 
 LOG = Reporter(__name__).setup()
