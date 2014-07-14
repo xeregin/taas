@@ -59,7 +59,6 @@ class Tempest(Framework):
         self.populate_settings()
 
         repo = 'https://github.com/openstack/tempest.git'
-        branch = 'stable/havana'
         tempest_dir = '/opt/tempest'
 
         if not exists(tempest_dir):
