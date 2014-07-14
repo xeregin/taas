@@ -31,7 +31,11 @@ class Framework(object):
                                         router=self.config['router'],
                                         users=self.config['users'])
 
-        with open('/opt/tempest/etc/tempest.conf', 'w') as stream:
+        conf_dir = '/opt/tempest/etc/'
+        if not exists(conf_dir):
+            os.makedirs(conf_dir)
+
+        with open(join(conf_dir, 'tempest.conf'), 'w') as stream:
             stream.write(self.settings)
 
     def test_from(self):
