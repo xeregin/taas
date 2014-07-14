@@ -1,11 +1,10 @@
 import logging
 import re
 
-from uuid import uuid4 as uuid
-
 from keystoneclient.v2_0.client import Client as keystone_client
 from neutronclient.v2_0.client import Client as neutron_client
 from novaclient.v1_1 import client as nova_client
+from uuid import uuid4 as uuid
 
 from .utils import retrieve
 
