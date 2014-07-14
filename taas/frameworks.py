@@ -54,24 +54,11 @@ class Tempest(Framework):
         super(Tempest, self).__init__(config, framework, test)
 
     def test_from(self):
-        LOG.info('Running Tempest tests for: {0}'.format(self.test))
-
-        self.populate_settings()
-
         repo = 'https://github.com/openstack/tempest.git'
         tempest_dir = '/opt/tempest'
 
         if not exists(tempest_dir):
-            os.mkdir(tempest_dir)
-
-        try:
-            os.rmdir(tempest_dir)
-        except OSError as exc:
-            if exc.errno == os.errno.ENOTEMPTY:
-                LOG.warning('Directory not empty: {0}'.format(tempest_dir))
-        else:
-            checkout = 'git clone -b {0} {1} {2}'.format(branch, repo,
-                                                         tempest_dir)
+            checkout = 'git clone {0} {1}'.format(repo, tempest_dir)
             subprocess.check_call(checkout, shell=True)
 
         json_file = 'taas_results.json'
