@@ -5,8 +5,7 @@ from .utils import cleanup, Reporter
 LOG = Reporter(__name__).setup()
 
 
-def main(endpoint, username='admin', password='secrete', framework='tempest',
-         test=''):
+def main(endpoint, framework, username='admin', password='secrete', test=''):
     environment = Environment(username, password, endpoint)
 
     with cleanup(environment):
