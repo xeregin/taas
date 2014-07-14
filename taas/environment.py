@@ -19,6 +19,10 @@ class Environment(object):
         self.auth_url = auth_url
 
         self.config = {}
+        self.users = []
+        self.tenant = None
+        self.network = None
+        self.router = None
 
         self.keystone = keystone_client(
             username=username,
@@ -38,12 +42,6 @@ class Environment(object):
             project_id=username,
             auth_url=auth_url
         )
-
-        self.tenant = None
-        self.users = []
-
-        self.network = None
-        self.router = None
 
     def create_tenant(self, name=None):
         LOG.info('Creating tenant')
