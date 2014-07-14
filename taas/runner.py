@@ -1,7 +1,3 @@
-import argh
-
-from contextlib import contextmanager
-
 from .environment import Environment
 from .frameworks import CloudCafe, Tempest
 from .utils.report import Reporter
@@ -37,4 +33,4 @@ def cleanup(stage):
 
 
 if __name__ == '__main__':
-    argh.dispatch_command(main)
+    main()
