@@ -33,7 +33,11 @@ class Framework(object):
                                         router=self.config['router'],
                                         users=self.config['users'])
 
-        with open('/opt/tempest/etc/tempest.conf', 'w') as stream:
+        conf_dir = '/opt/tempest/etc/'
+        if not exists(conf_dir):
+            os.makedirs(conf_dir)
+
+        with open(join(conf_dir, 'tempest.conf'), 'w') as stream:
             stream.write(self.settings)
 
     def test_from(self):
@@ -193,47 +197,29 @@ class Tempest(Framework):
         super(Tempest, self).__init__(config, framework, test)
 
     def test_from(self):
-        LOG.info('Running Tempest tests for: {0}'.format(self.test))
-
-        self.populate_settings()
-
         repo = 'https://github.com/openstack/tempest.git'
-        branch = 'stable/havana'
         tempest_dir = '/opt/tempest'
 
         if not exists(tempest_dir):
-            os.mkdir(tempest_dir)
-
-        try:
-            os.rmdir(tempest_dir)
-        except OSError as exc:
-            if exc.errno == os.errno.ENOTEMPTY:
-                LOG.warning('Directory not empty: {0}'.format(tempest_dir))
-        else:
-            checkout = 'git clone -b {0} {1} {2}'.format(branch, repo,
-                                                         tempest_dir)
+            checkout = 'git clone {0} {1}'.format(repo, tempest_dir)
             subprocess.check_call(checkout, shell=True)
 
-        json_file = 'taas_results.json'
-        json_flag = '--with-json --json-file={0}'.format(json_file)
+        tests_file = abspath('results.json')
+        tests_dir = join(tempest_dir, 'tempest/api/%s' % self.test)
 
-        tempest_cmd = (
-            'python -u `which nosetests` --where='
-            '{0}/tempest/api/{1} {2}'.format(tempest_dir, self.test,
-                                             json_flag)
-        )
+        self.populate_settings()
 
-        LOG.debug('Tempest command: {0}'.format(tempest_cmd))
+        flags = '--with-json --json-file={0}'.format(tests_file)
+        tempest_cmd = 'nosetests --where={0} {1}'.format(tests_dir, flags)
+
+        LOG.info('Running Tempest tests for: {0}'.format(self.test))
 
         try:
-            subprocess.check_output(
-                tempest_cmd,
-                shell=True,
-                stderr=subprocess.STDOUT
-            )
+            subprocess.check_output(tempest_cmd, shell=True,
+                                    stderr=subprocess.STDOUT)
         except Exception as exc:
             LOG.error(exc.output)
 
-        with open(json_file, 'r') as fp:
+        with open(tests_file, 'r') as fp:
             return json.dumps(json.load(fp), sort_keys=True, indent=4,
                               separators=(',', ': '))

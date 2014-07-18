@@ -8,10 +8,11 @@
     - python-dev
     - python-pip
 
-- synchronize: src=~/Development/taas dest=~/ delete=yes perms=yes
-               recursive=yes
+- synchronize: src=~/Development/taas archive=no dest=~/ delete=yes  recursive=yes
+  sudo: no
+
+- file: path=~/taas/ owner=stack group=stack mode=775
+  sudo: no
 
 - pip: requirements='https://raw.githubusercontent.com/jpmontez/taas/master/requirements.txt'
        state=latest
-
-- pip: name='git+https://github.com/jpmontez/nose-json.git#egg=nose-json'

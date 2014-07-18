@@ -1,16 +1,11 @@
-import argh
-
-from contextlib import contextmanager
-
 from .environment import Environment
 from .frameworks import CloudCafe, NetSiege, Tempest
-from .utils.report import Reporter
+from .utils import cleanup, Reporter
 
 LOG = Reporter(__name__).setup()
 
 
-def main(endpoint, username='admin', password='secrete', framework='tempest',
-         test=''):
+def main(endpoint, framework, username='admin', password='secrete', test=''):
     environment = Environment(username, password, endpoint)
 
     with cleanup(environment):
@@ -28,15 +23,5 @@ def main(endpoint, username='admin', password='secrete', framework='tempest',
         return results
 
 
-@contextmanager
-def cleanup(stage):
-    try:
-        yield
-    except (Exception, KeyboardInterrupt) as exc:
-        LOG.error('Run failed: {1}'.format(stage, exc))
-    finally:
-        stage.destroy()
-
-
 if __name__ == '__main__':
-    argh.dispatch_command(main)
+    main()
